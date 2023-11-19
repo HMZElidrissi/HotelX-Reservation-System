@@ -1,0 +1,96 @@
+package MiniProjet;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JFormattedTextField;
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
+import java.awt.Font;
+import javax.swing.border.TitledBorder;
+
+public class Reserver {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Reserver window = new Reserver();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Reserver() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(49, 11, 324, 114);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("La date d'arrivee       :");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setBounds(28, 11, 167, 14);
+		panel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("La date de depart     :");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(28, 34, 174, 14);
+		panel.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Nombre de chambre :");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_2.setBounds(28, 59, 149, 14);
+		panel.add(lblNewLabel_2);
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setBounds(213, 58, 30, 20);
+		panel.add(spinner);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(203, 30, 95, 20);
+		panel.add(dateChooser);
+		
+		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1.setBounds(203, 5, 95, 20);
+		panel.add(dateChooser_1);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder(null, "Chambre 1", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBounds(49, 136, 324, 116);
+		frame.getContentPane().add(panel_1);
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+}

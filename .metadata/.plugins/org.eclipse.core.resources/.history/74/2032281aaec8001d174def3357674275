@@ -1,0 +1,452 @@
+package MiniProjet;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JFormattedTextField;
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
+import java.awt.Font;
+import javax.swing.border.TitledBorder;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.awt.event.ActionEvent;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.Window.Type;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+
+public class Reserver {
+
+	private JFrame frame;
+	public static int cpt=1;
+	public static int cmt;
+	public static int numRooms = 0;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Reserver window = new Reserver();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Reserver() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		
+		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(158, 158, 158));
+		frame.setBounds(100, 100, 429, 415);
+		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{54, 90, 219, 119, 89, 49, 104, 0};
+		gridBagLayout.rowHeights = new int[]{23, 57, 33, 174, 23, 261, 23, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		frame.getContentPane().setLayout(gridBagLayout);
+		
+		JButton btnNewButton_1 = new JButton("<");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				Accueil ah = new Accueil();
+                ah.getFrame().setTitle("Welcome");
+                ah.getFrame().setVisible(true);
+			}
+		});
+		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
+		gbc_btnNewButton_1.anchor = GridBagConstraints.NORTH;
+		gbc_btnNewButton_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton_1.gridx = 0;
+		gbc_btnNewButton_1.gridy = 0;
+		frame.getContentPane().add(btnNewButton_1, gbc_btnNewButton_1);
+		
+		
+		JLabel lblNewLabel_5 = new JLabel("Reserver");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 16));
+		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
+		gbc_lblNewLabel_5.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblNewLabel_5.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_5.gridx = 2;
+		gbc_lblNewLabel_5.gridy = 0;
+		frame.getContentPane().add(lblNewLabel_5, gbc_lblNewLabel_5);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(192, 192, 192));
+		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
+		gbc_panel_2.fill = GridBagConstraints.BOTH;
+		gbc_panel_2.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_2.gridwidth = 3;
+		gbc_panel_2.gridx = 0;
+		gbc_panel_2.gridy = 1;
+		frame.getContentPane().add(panel_2, gbc_panel_2);
+		panel_2.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("La date d'arrivee       :");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setBounds(28, 11, 167, 14);
+		panel_2.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("La date de depart     :");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(28, 34, 174, 14);
+		panel_2.add(lblNewLabel_1);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(203, 30, 95, 20);
+		panel_2.add(dateChooser);
+		
+		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1.setBounds(203, 5, 95, 20);
+		panel_2.add(dateChooser_1);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(192, 192, 192));
+		panel_1.setBorder(new TitledBorder(null, "Chambre 1", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_1.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_1.gridwidth = 3;
+		gbc_panel_1.gridx = 0;
+		gbc_panel_1.gridy = 3;
+		frame.getContentPane().add(panel_1, gbc_panel_1);
+		panel_1.setLayout(null);
+		
+		JLabel lblNewLabel_2_1 = new JLabel("Categorie du chambre :");
+		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_2_1.setBounds(10, 33, 162, 14);
+		panel_1.add(lblNewLabel_2_1);
+		
+		JLabel lblNewLabel_3_1 = new JLabel("Nombre d'adulte          :");
+		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_3_1.setBounds(10, 73, 181, 14);
+		panel_1.add(lblNewLabel_3_1);
+		
+		JLabel lblNewLabel_4_1 = new JLabel("Nombre d'enfant         :");
+		lblNewLabel_4_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_4_1.setBounds(10, 112, 162, 14);
+		panel_1.add(lblNewLabel_4_1);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Simple", "Double", "Suite"}));
+		comboBox_1.setBounds(191, 31, 99, 22);
+		panel_1.add(comboBox_1);
+		
+		JSpinner spinner_2 = new JSpinner();
+		spinner_2.setModel(new SpinnerNumberModel(1, 1, 2, 1));
+		spinner_2.setBounds(191, 72, 47, 20);
+		spinner_2.setValue(1);
+		panel_1.add(spinner_2);
+		
+		JSpinner spinner_1_1 = new JSpinner();
+		spinner_1_1.setModel(new SpinnerNumberModel(0, 0, 2, 1));
+		spinner_1_1.setBounds(191, 111, 47, 20);
+		
+				spinner_1_1.addChangeListener(new ChangeListener() {
+				    public void stateChanged(ChangeEvent e) {
+				    	//Object source = e.getSource();
+				    	//if(source.equals(spinner_1)) {
+				    		int enfantCount = (int) spinner_1_1.getValue();
+		    		        if (enfantCount < labels.size()) {
+		    		            for (int i = enfantCount; i < labels.size(); i++) {
+		    		            	panel_1.remove(labels.get(i));
+		    		                panel_1.remove(spinners.get(i));
+		    		            }
+		    		            labels.subList(enfantCount, labels.size()).clear();
+		    		            spinners.subList(enfantCount, spinners.size()).clear();
+		    		        } else {
+		    		            for (int i = labels.size() + 1; i <= enfantCount; i++) {
+		    		                JLabel label = new JLabel("enfant " + i);
+		    		                label.setBounds(90+(i-1)*60, 129, 49, 14);
+		    		                panel_1.add(label);
+		    		                labels.add(label);
+		
+		    		                JSpinner enfantSpinner = new JSpinner();
+		    		                enfantSpinner.setModel(new SpinnerNumberModel(0, 0, 12, 1));
+		    		                enfantSpinner.setBounds(90+(i-1)*60, 143, 40, 20);
+		    		                panel_1.add(enfantSpinner);
+		    		                spinners.add(enfantSpinner);
+		    		            }
+		    		        }
+		    		        panel_1.revalidate();
+		    		        panel_1.repaint();
+		    		    }
+				   // }
+				    
+				        
+				});
+				panel_1.add(spinner_1_1);
+		
+		JButton btnNewButton = new JButton("Ajouter une autre chambre");
+		btnNewButton.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        if (e.getSource() == btnNewButton) {
+		            
+		            
+		            numRooms++;
+		            cmt=numRooms;
+		            JPanel panel = new JPanel();
+		            panel.setBackground(new Color(192, 192, 192));
+		            panel.setBorder(new TitledBorder(null, "Chambre "+(cmt+1), TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		            if(cmt<3)
+		            {
+		            panel.setBounds(49+ cmt  * 400, 130 , 324, 174);
+		            panel.setLayout(null);
+		            btnNewButton.setBounds(154+ cmt  * 400, 304, 219, 23);
+		            }
+		            if(cmt>=3 && cmt<6 )
+		            {
+		            panel.setBounds(49+ (cmt-3) * 400, 130+  180 , 324, 174);
+		            panel.setLayout(null);
+		            btnNewButton.setBounds(154+ (cmt-3) * 400, 304+ 180, 219, 23);		           
+		            }
+		            if(cmt>=5) 
+		    		{
+		    			btnNewButton.setEnabled(false);
+		    		}
+		            JLabel lblNewLabel_2 = new JLabel("Categorie du chambre :");
+		            lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		            lblNewLabel_2.setBounds(10, 33, 162, 14);
+		            panel.add(lblNewLabel_2);
+
+		            JLabel lblNewLabel_3 = new JLabel("Nombre d'adulte          :");
+		            lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		            lblNewLabel_3.setBounds(10, 73, 181, 14);
+		            panel.add(lblNewLabel_3);
+
+		            JLabel lblNewLabel_4 = new JLabel("Nombre d'enfant         :");
+		            lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		            lblNewLabel_4.setBounds(10, 112, 162, 14);
+		            panel.add(lblNewLabel_4);
+
+		            JComboBox comboBox = new JComboBox();
+		            comboBox.setModel(new DefaultComboBoxModel(new String[] {"Simple", "Double", "Suite"}));
+		            comboBox.setBounds(191, 31, 99, 22);
+		            panel.add(comboBox);
+
+		            JSpinner spinner = new JSpinner();
+		            spinner.setBounds(191, 72, 47, 20);
+		            spinner.setModel(new SpinnerNumberModel(1, 1, 2, 1));
+		            spinner.setValue(1);
+		            panel.add(spinner);
+
+		            JSpinner spinner_1 = new JSpinner();
+		    		spinner_1.setModel(new SpinnerNumberModel(0, 0, 2, 1));
+		    		spinner_1.setBounds(191, 111, 47, 20);
+		    		frame.getContentPane().add(panel);
+		    		roomPanels[cmt-1] = panel;
+		    		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		    		panel.revalidate();
+    		        panel.repaint();
+    		        
+		            JButton btnDelete = new JButton("Supprimer");
+		            btnDelete.addActionListener(new ActionListener() {
+		            	public void actionPerformed(ActionEvent e) {
+        // find the index of the panel to be removed
+		            		int indexToRemove = -1;
+		            		for (int i = 0; i < numRooms; i++) {
+				            if (roomPanels[i] == panel) {
+				                indexToRemove = i;
+				                break;
+				            }
+				        }
+				        if (indexToRemove != -1) {
+				            // remove the panel from the array and from the GUI
+				            frame.getContentPane().remove(roomPanels[indexToRemove]);
+				            if (indexToRemove == 0) {
+				            for (int i = indexToRemove ; i < numRooms; i++) {
+				                // adjust the positions of the remaining panels
+				            	int newX = roomPanels[i].getX() - 400;
+				            	roomPanels[i].setLocation( newX,roomPanels[i].getY());
+				            	TitledBorder border = (TitledBorder) roomPanels[i].getBorder();
+				                border.setTitle("Chambre " + (i+1));
+				                // update the title of the panel
+				            	if(i==2) {
+//					                int newY = roomPanels[i].getY() - 180;
+					                roomPanels[i].setLocation(49+ 2  * 400, 130 );
+					                TitledBorder border1 = (TitledBorder) roomPanels[i].getBorder();
+					                border1.setTitle("Chambre " + (i+1));
+				            	}
+				            	if(i==2) {
+				            		newX = roomPanels[i].getX() - 400;
+					            	roomPanels[i].setLocation( newX,roomPanels[i].getY());
+					                roomPanels[i].setLocation(49+ 2  * 400, 130 );
+					                TitledBorder border1 = (TitledBorder) roomPanels[i].getBorder();
+					                border1.setTitle("Chambre " + (i+1));
+				            	}
+				            	
+
+				            }
+				            }
+				            numRooms--;
+				            cmt=numRooms;
+				            // adjust the position of the "add room" button
+				            
+				        }
+				       if(cmt<3)
+			            {
+				            panel.setBounds(49+ cmt  * 400, 130 , 324, 174);
+				            panel.setLayout(null);
+				            btnNewButton.setBounds(154+ cmt  * 400, 304, 219, 23);
+				            }
+				            if(cmt>=3 && cmt<6 )
+				            {
+				            panel.setBounds(49+ (cmt-3) * 400, 130+  180 , 324, 174);
+				            panel.setLayout(null);
+				            btnNewButton.setBounds(154+ (cmt-3) * 400, 304+ 180, 219, 23);		           
+				            } 
+				            if(cmt<5) 
+				    		{
+				    			btnNewButton.setEnabled(true);
+				    		}
+				            //refresh the GUI
+				       // btnNewButton.setBounds(154, 304+ (cmt) * 180, 219, 23);
+				        frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+				        panel.revalidate();
+	    		        panel.repaint();
+				        frame.getContentPane().revalidate();
+				        frame.getContentPane().repaint();
+				    }
+				});
+		            
+				btnDelete.setBounds(220, 139, 100, 23);
+				panel.add(btnDelete);
+						            
+		            List<JLabel> labels = new ArrayList<>();
+		    		List<JSpinner> spinners = new ArrayList<>();
+
+		    		spinner_1.addChangeListener(new ChangeListener() {
+		    		    public void stateChanged(ChangeEvent e) {
+		    		    	//Object source = e.getSource();
+		    		    	//if(source.equals(spinner_1)) {
+		    		    		int enfantCount = (int) spinner_1.getValue();
+			    		        if (enfantCount < labels.size()) {
+			    		            for (int i = enfantCount; i < labels.size(); i++) {
+			    		                panel.remove(labels.get(i));
+			    		                panel.remove(spinners.get(i));
+			    		            }
+			    		            labels.subList(enfantCount, labels.size()).clear();
+			    		            spinners.subList(enfantCount, spinners.size()).clear();
+			    		        } else {
+			    		            for (int i = labels.size() + 1; i <= enfantCount; i++) {
+			    		                JLabel label = new JLabel("enfant " + i);
+			    		                label.setBounds(90+(i-1)*60, 129, 49, 14);
+			    		                panel.add(label);
+			    		                labels.add(label);
+
+			    		                JSpinner enfantSpinner = new JSpinner();
+			    		                enfantSpinner.setModel(new SpinnerNumberModel(0, 0, 12, 1));
+			    		                enfantSpinner.setBounds(90+(i-1)*60, 143, 40, 20);
+			    		                panel.add(enfantSpinner);
+			    		                spinners.add(enfantSpinner);
+			    		            }
+			    		        }
+			    		        panel.revalidate();
+			    		        panel.repaint();
+			    		    }
+		    		   // }
+		    		    
+		    		        
+		    		});
+		    		panel.add(spinner_1);
+		            panel.add(btnDelete);
+
+		            frame.getContentPane().add(panel);
+		            
+		            
+		        }
+		    }
+		});
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.anchor = GridBagConstraints.NORTH;
+		gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton.gridx = 2;
+		gbc_btnNewButton.gridy = 4;
+		frame.getContentPane().add(btnNewButton, gbc_btnNewButton);
+        List<JLabel> labels = new ArrayList<>();
+		List<JSpinner> spinners = new ArrayList<>();
+		
+		JButton btnNewButton_3 = new JButton("Rechercher");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 String arrivalDate = dateChooser_1.getDate().toString();
+			        String departureDate = dateChooser.getDate().toString();
+			        String category = comboBox_1.getSelectedItem().toString();
+			        int numAdults = (int) spinner_2.getValue();
+			        int numChildren = (int) spinner_1_1.getValue();
+			}
+		});
+		
+		
+		
+		
+		
+
+		
+		JButton btnNewButton_2 = new JButton("Annuler");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dateChooser.setDate(null);
+		        dateChooser_1.setDate(null);
+		        comboBox_1.setSelectedIndex(0);
+		        spinner_2.setValue(1);
+		        spinner_1_1.setValue(0);
+			}
+		});
+		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
+		gbc_btnNewButton_2.anchor = GridBagConstraints.NORTH;
+		gbc_btnNewButton_2.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnNewButton_2.insets = new Insets(0, 0, 0, 5);
+		gbc_btnNewButton_2.gridx = 4;
+		gbc_btnNewButton_2.gridy = 6;
+		frame.getContentPane().add(btnNewButton_2, gbc_btnNewButton_2);
+		GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
+		gbc_btnNewButton_3.anchor = GridBagConstraints.NORTH;
+		gbc_btnNewButton_3.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnNewButton_3.gridx = 6;
+		gbc_btnNewButton_3.gridy = 6;
+		frame.getContentPane().add(btnNewButton_3, gbc_btnNewButton_3);
+		
+		
+		JPanel[] roomPanels = new JPanel[10]; // array to store the room panels
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+}

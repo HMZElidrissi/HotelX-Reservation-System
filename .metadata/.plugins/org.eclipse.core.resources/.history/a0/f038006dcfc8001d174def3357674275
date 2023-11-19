@@ -1,0 +1,392 @@
+package MiniProjet;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+
+import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
+import javax.swing.JPanel;
+import java.util.Date;
+import java.awt.Font;
+import java.util.Calendar;
+import javax.swing.SpinnerNumberModel;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.SystemColor;
+import javax.swing.border.TitledBorder;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.util.HashMap;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+
+
+public class Reservation {
+
+	private JFrame frame;
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+	private Connexion mycnx;
+	private JTextField nom;
+	private JTextField prenom;
+	private JTextField num;
+	private 		HashMap<Integer,ChambreSimp> simples= new HashMap<Integer,ChambreSimp>();
+	private 		HashMap<Integer,ChambreSimp> doubles= new HashMap<Integer,ChambreSimp>();;
+	private 		HashMap<Integer,ChambreSimp> suites= new HashMap<Integer,ChambreSimp>();
+	private  JTabbedPane Panesimple = new JTabbedPane(JTabbedPane.TOP);
+	private  JTabbedPane Panedouble = new JTabbedPane(JTabbedPane.TOP);
+	private  JTabbedPane Panesuite = new JTabbedPane(JTabbedPane.TOP);
+    JLabel countsimple = new JLabel("0");
+    JLabel countdouble = new JLabel("0");
+    JLabel countsuite = new JLabel("0");
+    JButton continuer = new JButton("continuer");
+    String startdate;
+    String enddate;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Reservation window = new Reservation("2023-03-21","2023-03-25");
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	public void updateTabTitles(JTabbedPane tabbedPane) {
+		if(Panesimple.getTabCount()==0 && Panedouble.getTabCount()==0 &&  Panesuite.getTabCount()==0)
+			continuer.setEnabled(false);
+		else
+			continuer.setEnabled(true);
+	    int count = tabbedPane.getTabCount();
+	    if(tabbedPane.equals(Panesimple))
+	    	countsimple.setText(""+ count);
+	    if(tabbedPane.equals(Panedouble))
+	    	countdouble.setText(""+ count);
+	    if(tabbedPane.equals(Panesuite))
+	    	countsuite.setText(""+ count);
+	    for (int i = 0; i < count; i++) {
+	        Component component = tabbedPane.getComponentAt(i);
+	        if (component instanceof JPanel) {
+	        	if(count<5)
+	            tabbedPane.setTitleAt(i,"chambre"+ (i+1));
+	        	else
+	        		tabbedPane.setTitleAt(i,""+ (i+1));
+	        }
+	    }
+	}
+	public float calculerprix(){
+		float prixttl=0;
+		Date day =new Date();
+		Date end=new Date();
+		try {
+			day = new SimpleDateFormat("yyyy-MM-dd").parse(startdate);
+			end =new SimpleDateFormat("yyyy-MM-dd").parse(enddate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		try {
+			Calendar cal1 = Calendar.getInstance();
+			cal1.setTime(end);
+	        cal1.add(Calendar.DATE, 1);
+	       end=cal1.getTime();
+		while(end.after(day)){
+		ResultSet res =mycnx.getData("SELECT prixnuit FROM `prixsaison` ps WHERE typechambre = 'simple'"
+				+ " and ps.typesaison=(SELECT type FROM Saison WHERE MONTH('2023-03-21') * 100 +"
+				+ " DAY('2023-03-21') BETWEEN MONTH(Datedebut) * 100 + DAY(Datedebut) AND MONTH(Datefin) "
+				+ "* 100 + DAY(Datefin));");
+			res.next();
+			prixttl= Float.parseFloat(res.getString("prixnuit"));
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(day);
+	        cal.add(Calendar.DATE, 1);
+	       day=cal.getTime();
+		}}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return prixttl;
+		
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Reservation(String start,String end) {
+		mycnx =new Connexion();
+		
+		this.startdate=start;
+		this.enddate=end;
+			initialize();
+			calculerprix();
+		
+	}
+
+	private void initialize() {
+
+		
+		setFrame(new JFrame());
+		getFrame().setForeground(new Color(160, 160, 160));
+		getFrame().setBackground(new Color(159, 136, 113));
+		getFrame().setBounds(100, 100, 1295, 695);
+		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getFrame().setLocationRelativeTo(null); 
+		getFrame().setResizable(false);
+		
+		JScrollBar scrollBar = new JScrollBar();
+		scrollBar.setBounds(587, 0, 17, 700);
+
+	        // Set the size of the JFrame and make it visible
+	       getFrame().setSize(955, 682);
+	       getFrame().getContentPane().setLayout(null);
+	        
+	        nom = new JTextField();
+	        nom.setColumns(10);
+	        nom.setBounds(160, 257, 86, 20);
+	       getFrame().getContentPane().add(nom);
+	        
+	        prenom = new JTextField();
+	        prenom.setColumns(10);
+	        prenom.setBounds(160, 297, 86, 20);
+	       getFrame().getContentPane().add(prenom);
+	        
+	        num = new JTextField();
+	        num.setColumns(10);
+	        num.setBounds(160, 340, 86, 20);
+	       getFrame().getContentPane().add(num);
+	        
+	        JLabel lblNewLabel = new JLabel("Nom ");
+	        lblNewLabel.setFont(new Font("Arial Black", Font.PLAIN, 11));
+	        lblNewLabel.setBounds(70, 259, 46, 14);
+	       getFrame().getContentPane().add(lblNewLabel);
+	        
+	        JLabel lblNewLabel_1 = new JLabel("Pr\u00E9nom");
+	        lblNewLabel_1.setFont(new Font("Arial Black", Font.PLAIN, 11));
+	        lblNewLabel_1.setBounds(70, 300, 52, 14);
+	       getFrame().getContentPane().add(lblNewLabel_1);
+	        
+	        JLabel lblNewLabel_2 = new JLabel("T\u00E9l");
+	        lblNewLabel_2.setFont(new Font("Arial Black", Font.PLAIN, 11));
+	        lblNewLabel_2.setBounds(70, 343, 46, 14);
+	       getFrame().getContentPane().add(lblNewLabel_2);
+	        
+	        JLabel lblNewLabel_3 = new JLabel("Chambres simples");
+	        lblNewLabel_3.setFont(new Font("Arial Black", Font.PLAIN, 12));
+	        lblNewLabel_3.setBounds(457, 11, 138, 14);
+	       getFrame().getContentPane().add(lblNewLabel_3);
+	        
+	        JSeparator separator = new JSeparator();
+	        separator.setBounds(10, 344, 529, -193);
+	       getFrame().getContentPane().add(separator);
+	        
+	        JLabel lblNewLabel_8 = new JLabel(":");
+	        lblNewLabel_8.setFont(new Font("Arial Black", Font.PLAIN, 11));
+	        lblNewLabel_8.setBounds(129, 259, 21, 14);
+	       getFrame().getContentPane().add(lblNewLabel_8);
+	        
+	        JLabel lblNewLabel_8_1 = new JLabel(":");
+	        lblNewLabel_8_1.setFont(new Font("Arial Black", Font.PLAIN, 11));
+	        lblNewLabel_8_1.setBounds(129, 300, 21, 14);
+	       getFrame().getContentPane().add(lblNewLabel_8_1);
+	        
+	        JLabel lblNewLabel_8_2 = new JLabel(":");
+	        lblNewLabel_8_2.setFont(new Font("Arial Black", Font.PLAIN, 11));
+	        lblNewLabel_8_2.setBounds(129, 343, 21, 14);
+	       getFrame().getContentPane().add(lblNewLabel_8_2);
+	       
+	       JScrollPane scrollPane_1 = new JScrollPane();
+	       scrollPane_1.setBounds(457, 224, 474, 135);
+	       frame.getContentPane().add(scrollPane_1);
+	       scrollPane_1.setViewportView(Panedouble);
+	        
+	        JSeparator separator_2 = new JSeparator();
+	        separator_2.setForeground(SystemColor.controlShadow);
+	        separator_2.setBounds(46, 224, 328, 162);
+	       getFrame().getContentPane().add(separator_2);
+	       
+	       JScrollPane scrollPane = new JScrollPane();
+	       scrollPane.setBounds(457, 40, 474, 135);
+	       frame.getContentPane().add(scrollPane);
+	       
+	      // JTabbedPane Panesimple = new JTabbedPane(JTabbedPane.TOP); rendu global 
+	       
+	       scrollPane.setViewportView(Panesimple);
+	       
+	       //JLabel countsimple = new JLabel("1");
+	       countsimple.setFont(new Font("Tahoma", Font.BOLD, 15));
+	       countsimple.setBounds(594, 7, 29, 20);
+	       frame.getContentPane().add(countsimple);
+	       ChambreSimp temp=new ChambreSimp();
+      		simples.put(temp.getMynbr(),temp);
+	       JButton ajoutersimple = new JButton("ajouter");
+	       ajoutersimple.addActionListener(new ActionListener() {
+		       	public void actionPerformed(ActionEvent e) { 
+		       		ChambreSimp temp=new ChambreSimp();
+		       		updateTabTitles(Panesimple) ;
+		       		Panesimple.addTab("", null,temp.getpanel(), null);
+		       		updateTabTitles(Panesimple) ;
+		       		temp.getSupprimer().addActionListener(new ActionListener() {
+		    	     		    @Override
+		    	     		    public void actionPerformed(ActionEvent e) {
+		    	     		        int index = Panesimple.getSelectedIndex();
+		    	     		        if (index != -1) {
+		    	     		        	
+		    	     		        	Panesimple.remove(index);
+		    	     		        	updateTabTitles(Panesimple) ;
+		    	     		        }
+		    	     	}
+		    	     });
+		       	}
+		       });
+	       
+	       ajoutersimple.setBounds(633, 8, 89, 23);
+	       frame.getContentPane().add(ajoutersimple);
+	       
+	      // JLabel countdouble = new JLabel("1");
+	       countdouble.setFont(new Font("Tahoma", Font.BOLD, 15));
+	       countdouble.setBounds(594, 186, 29, 20);
+	       frame.getContentPane().add(countdouble);
+	       
+	       JButton ajouterdouble = new JButton("ajouter");
+	       ajouterdouble.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) { 
+	       		ChambreSimp temp=new ChambreSimp();
+	       		updateTabTitles(Panedouble) ;
+	       		Panedouble.addTab("", null,temp.getpanel(), null);
+	       		updateTabTitles(Panedouble) ;
+	       		temp.getSupprimer().addActionListener(new ActionListener() {
+	    	     		    @Override
+	    	     		    public void actionPerformed(ActionEvent e) {
+	    	     		        int index = Panedouble.getSelectedIndex();
+	    	     		        if (index != -1) {
+	    	     		        	
+	    	     		        	Panedouble.remove(index);
+	    	     		        	updateTabTitles(Panedouble) ;
+	    	     		        }
+	    	     	}
+	    	     });
+	       	}
+	       });
+	       
+	       ajouterdouble.setBounds(633, 187, 89, 23);
+	       frame.getContentPane().add(ajouterdouble);
+	       
+	       JLabel lblNewLabel_3_1 = new JLabel("Chambres doubles");
+	       lblNewLabel_3_1.setFont(new Font("Arial Black", Font.PLAIN, 12));
+	       lblNewLabel_3_1.setBounds(457, 190, 138, 14);
+	       frame.getContentPane().add(lblNewLabel_3_1);
+	       
+	       //JLabel countsuite = new JLabel("1");
+	       countsuite.setFont(new Font("Tahoma", Font.BOLD, 15));
+	       countsuite.setBounds(594, 366, 29, 20);
+	       frame.getContentPane().add(countsuite);
+	       
+	       JButton ajoutersuite = new JButton("ajouter");
+	       ajoutersuite.setBounds(633, 367, 89, 23);
+	       frame.getContentPane().add(ajoutersuite);
+	       ajoutersuite.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) { 
+	       		ChambreSimp temp=new ChambreSimp();
+	       		updateTabTitles(Panesuite) ;
+	       		Panesuite.addTab("", null,temp.getpanel(), null);
+	       		updateTabTitles(Panesuite) ;
+	       		temp.getSupprimer().addActionListener(new ActionListener() {
+	    	     		    @Override
+	    	     		    public void actionPerformed(ActionEvent e) {
+	    	     		        int index = Panesuite.getSelectedIndex();
+	    	     		        if (index != -1) {
+	    	     		        	
+	    	     		        	Panesuite.remove(index);
+	    	     		        	updateTabTitles(Panesuite) ;
+	    	     		        }
+	    	     	}
+	    	     });
+	       	}
+	       });
+	       
+	       JLabel lblNewLabel_3_2 = new JLabel("Suites");
+	       lblNewLabel_3_2.setFont(new Font("Arial Black", Font.PLAIN, 12));
+	       lblNewLabel_3_2.setBounds(457, 370, 138, 14);
+	       frame.getContentPane().add(lblNewLabel_3_2);
+	       
+	       JScrollPane scrollPane_2 = new JScrollPane();
+	       scrollPane_2.setBounds(457, 401, 474, 135);
+	       frame.getContentPane().add(scrollPane_2);
+	       scrollPane_2.setViewportView(Panesuite);
+	       
+	       JLabel lblInformationsPersonnels = new JLabel("Informations personnels");
+	       lblInformationsPersonnels.setFont(new Font("Arial Black", Font.PLAIN, 14));
+	       lblInformationsPersonnels.setBounds(87, 190, 196, 35);
+	       frame.getContentPane().add(lblInformationsPersonnels);
+	       
+	       JLabel error1 = new JLabel("New label");
+	       error1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	       error1.setForeground(new Color(255, 0, 0));
+	       error1.setBounds(256, 260, 103, 14);
+	       frame.getContentPane().add(error1);
+	       
+	       JLabel error2 = new JLabel("New label");
+	       error2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	       error2.setForeground(new Color(255, 0, 0));
+	       error2.setBounds(256, 300, 103, 14);
+	       frame.getContentPane().add(error2);
+	       
+	       JLabel error3 = new JLabel("New label");
+	       error3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	       error3.setForeground(new Color(255, 0, 0));
+	       error3.setBounds(256, 343, 103, 14);
+	       frame.getContentPane().add(error3);
+	       
+	       JButton annuler = new JButton("annuler");
+	       annuler.setFont(new Font("Arial Black", Font.BOLD, 14));
+	       annuler.setBounds(800, 602, 131, 31);
+	       frame.getContentPane().add(annuler);
+	       continuer.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) {
+	       		if(nom.getText().equals("") ||prenom.getText().equals("")||num.getText().equals("")) {
+	       			if(nom.getText().equals(""))
+	       				error1.setText("*  vide ");
+		       		if(prenom.getText().equals(""))
+	       				error2.setText("*  vide ");
+		       		if(num.getText().equals(""))
+	       				error3.setText("*  vide ");
+		       		}else
+		       		{
+		       			
+		       		}
+	       			 
+	       	}
+	       });
+	       
+	       //JButton continuer = new JButton("continuer");
+	       continuer.setEnabled(false);
+	       continuer.setFont(new Font("Arial Black", Font.BOLD, 14));
+	       continuer.setBounds(659, 602, 131, 31);
+	       frame.getContentPane().add(continuer);
+	       
+	      
+	       getFrame().setVisible(true);
+	}
+}

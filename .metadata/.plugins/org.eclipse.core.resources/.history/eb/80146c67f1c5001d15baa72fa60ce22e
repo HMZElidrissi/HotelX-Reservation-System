@@ -1,0 +1,102 @@
+package MiniProjet;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.Color;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class Accueil extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Accueil window = new Accueil();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Accueil() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(158, 158, 158));
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(192, 192, 192));
+		panel.setBounds(58, 29, 329, 194);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JButton btnNewButton = new JButton("Reserver");
+//		 btnNewButton.addActionListener(new ActionListener() {
+//
+//	            public void actionPerformed(ActionEvent e) {
+//	                
+//	                try {
+//	                    Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1/MiniProjet?serverTimezone=UTC",
+//	                        "root", "");
+//
+//	                    PreparedStatement st = (PreparedStatement) connection
+//	                        .prepareStatement("Select name, password from agent where name=? and password=?");
+//
+//	                    st.setString(1, userName);
+//	                    st.setString(2, password);
+//	                    ResultSet rs = st.executeQuery();
+//	                    if (rs.next()) {
+//	                        dispose();
+//	                        UserHome ah = new UserHome(userName);
+//	                        ah.setTitle("Welcome");
+//	                        ah.setVisible(true);
+//	                        JOptionPane.showMessageDialog(btnNewButton, "You have successfully logged in");
+//	                    } else {
+//	                        JOptionPane.showMessageDialog(btnNewButton, "Wrong Username & Password");
+//	                    }
+//	                } catch (SQLException sqlException) {
+//	                    sqlException.printStackTrace();
+//	                }
+//	            }
+//	        });
+
+		btnNewButton.setBounds(43, 27, 245, 23);
+		panel.add(btnNewButton);
+		
+		
+		JButton btnNewButton_1 = new JButton("Consulter reservation");
+		btnNewButton_1.setBounds(43, 81, 245, 23);
+		panel.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("Entrer client");
+		btnNewButton_2.setBounds(43, 141, 245, 23);
+		panel.add(btnNewButton_2);
+	}
+
+}

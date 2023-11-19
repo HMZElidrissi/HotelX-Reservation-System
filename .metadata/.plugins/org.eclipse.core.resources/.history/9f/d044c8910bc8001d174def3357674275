@@ -1,0 +1,119 @@
+package MiniProjet;
+
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JComboBox;
+import javax.swing.JCheckBox;
+import javax.swing.JSpinner;
+import java.awt.Color;
+
+public class AjouterChambre {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					AjouterChambre window = new AjouterChambre();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public AjouterChambre() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(158, 158, 158));
+		frame.setBounds(100, 100, 450, 344);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		JButton btnNewButton_1 = new JButton("Accueil");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				Accueil_2 ah = new Accueil_2();
+                ah.getFrame().setTitle("Welcome");
+                ah.getFrame().setVisible(true);
+			}
+		});
+		btnNewButton_1.setBounds(10, 6, 73, 23);
+		frame.getContentPane().add(btnNewButton_1);
+		JLabel lblNewLabel = new JLabel("Ajouter chambre");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel.setBounds(136, 24, 194, 28);
+		frame.getContentPane().add(lblNewLabel);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(192, 192, 192));
+		panel.setBounds(46, 64, 339, 199);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel_1 = new JLabel("Type de chambre :");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(26, 45, 134, 18);
+		panel.add(lblNewLabel_1);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(170, 41, 30, 22);
+		panel.add(comboBox);
+		
+		JLabel lblNewLabel_2 = new JLabel("Etage N :");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_2.setBounds(26, 87, 134, 14);
+		panel.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("N ordre :");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_3.setBounds(26, 123, 134, 14);
+		panel.add(lblNewLabel_3);
+		
+		JCheckBox chckbxNewCheckBox = new JCheckBox("hors service");
+		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		chckbxNewCheckBox.setBounds(26, 155, 99, 23);
+		panel.add(chckbxNewCheckBox);
+		
+		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setBounds(170, 122, 30, 20);
+		panel.add(spinner_1);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(170, 85, 30, 22);
+		panel.add(comboBox_1);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.setBounds(159, 274, 89, 23);
+		frame.getContentPane().add(btnNewButton);
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+}

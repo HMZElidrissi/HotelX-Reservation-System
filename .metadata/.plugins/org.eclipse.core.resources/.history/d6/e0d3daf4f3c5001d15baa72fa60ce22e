@@ -1,0 +1,128 @@
+package MiniProjet;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.awt.Color;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JPasswordField;
+
+public class Identification extends JFrame {
+
+	private JFrame frame;
+	private JTextField textField;
+	private JPasswordField passwordField;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Identification window = new Identification();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Identification() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(158, 158, 158));
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(192, 192, 192));
+		panel.setBounds(81, 55, 268, 179);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel_1 = new JLabel("Mon ID :");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(23, 25, 84, 14);
+		panel.add(lblNewLabel_1);
+		
+		textField = new JTextField();
+		textField.setBounds(51, 50, 173, 20);
+		panel.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("Mot de passe :");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_2.setBounds(23, 81, 97, 14);
+		panel.add(lblNewLabel_2);
+		
+		JButton btnNewButton = new JButton("Se connecter");
+		btnNewButton.setBounds(72, 145, 118, 23);
+		btnNewButton.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                String userName = textField.getText();
+                String password = passwordField.getText();
+                try {
+                    Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://127.0.0.1/MiniProjet?serverTimezone=UTC",
+                        "root", "");
+
+                    PreparedStatement st = (PreparedStatement) connection.prepareStatement("Select name, password from agent where name=? and password=?");
+
+                    st.setString(1, userName);
+                    st.setString(2, password);
+                    ResultSet rs = st.executeQuery();
+                    if (rs.next()) {
+                        dispose();
+                        Accueil ah = new Accueil();
+                        ah.setTitle("Welcome");
+                        ah.setVisible(true);
+                        JOptionPane.showMessageDialog(btnNewButton, "Vous avez connecte avec succees");
+                    } else {
+                        JOptionPane.showMessageDialog(btnNewButton, "L'ID ou le mot de passe est incorrect");
+                    }
+                } catch (SQLException sqlException) {
+                    sqlException.printStackTrace();
+                }
+            }
+        });
+
+		panel.add(btnNewButton);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(51, 106, 173, 20);
+		panel.add(passwordField);
+		
+		JLabel lblNewLabel = new JLabel("Je m'identifie");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel.setBounds(154, 30, 115, 14);
+		frame.getContentPane().add(lblNewLabel);
+		
+		 
+	}
+	
+}

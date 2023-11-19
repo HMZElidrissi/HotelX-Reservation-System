@@ -1,0 +1,290 @@
+package MiniProjet;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JFormattedTextField;
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
+import java.awt.Font;
+import javax.swing.border.TitledBorder;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.awt.event.ActionEvent;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.JTabbedPane;
+import javax.swing.border.EtchedBorder;
+
+public class Reserver {
+
+	private JFrame frame;
+	public static int cpt=1;
+	public static int cmt;
+	public static int numRooms = 0;
+	JButton btnNewButton_3 = new JButton("Rechercher");
+	JButton btnDelete = new JButton("Supprimer");
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Reserver window = new Reserver();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public void updateTabTitles(JTabbedPane tabbedPane) {
+		int count=tabbedPane.getTabCount();
+	    for (int i = 0; i < count; i++) {
+	        Component component = tabbedPane.getComponentAt(i);
+	        if (component instanceof JPanel) {
+	        	if(count<5)
+	            tabbedPane.setTitleAt(i,"chambre"+ (i+1));
+	        	else
+	        		tabbedPane.setTitleAt(i,""+ (i+1));
+	        }
+	    }
+	    if(numRooms>0) {
+        	btnNewButton_3.setEnabled(true);
+        }
+	}
+
+	public Reserver() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		
+		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(158, 158, 158));
+		frame.setBounds(100, 100, 461, 450);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(192, 192, 192));
+		panel.setBounds(49, 40, 324, 57);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("La date d'arrivee       :");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setBounds(28, 11, 167, 14);
+		panel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("La date de depart     :");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(28, 34, 174, 14);
+		panel.add(lblNewLabel_1);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(203, 30, 95, 20);
+		panel.add(dateChooser);
+		
+		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1.setBounds(203, 5, 95, 20);
+		panel.add(dateChooser_1);
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(49, 130, 324, 200);
+		frame.getContentPane().add(tabbedPane);
+		
+		JPanel panel_1 = new JPanel();
+		//tabbedPane.addTab("Chambre 1", null, panel_1, null);
+		panel_1.setBackground(new Color(192, 192, 192));
+		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_1.setLayout(null);
+		
+		JLabel lblNewLabel_2_1 = new JLabel("Categorie du chambre :");
+		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_2_1.setBounds(10, 33, 162, 14);
+		panel_1.add(lblNewLabel_2_1);
+		
+		JLabel lblNewLabel_3_1 = new JLabel("Nombre d'adulte          :");
+		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_3_1.setBounds(10, 73, 181, 14);
+		panel_1.add(lblNewLabel_3_1);
+		
+		JLabel lblNewLabel_4_1 = new JLabel("Nombre d'enfant         :");
+		lblNewLabel_4_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_4_1.setBounds(10, 112, 162, 14);
+		panel_1.add(lblNewLabel_4_1);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Simple", "Double", "Suite"}));
+		comboBox_1.setBounds(191, 31, 99, 22);
+		panel_1.add(comboBox_1);
+		
+		JSpinner spinner_2 = new JSpinner();
+		spinner_2.setModel(new SpinnerNumberModel(1, 1, 2, 1));
+		spinner_2.setBounds(191, 72, 47, 20);
+		spinner_2.setValue(1);
+		panel_1.add(spinner_2);
+		
+		JSpinner spinner_1_1 = new JSpinner();
+		spinner_1_1.setModel(new SpinnerNumberModel(0, 0, 2, 1));
+		spinner_1_1.setBounds(191, 111, 47, 20);
+		 List<JLabel> labels = new ArrayList<>();
+			List<JSpinner> spinners = new ArrayList<>();
+				spinner_1_1.addChangeListener(new ChangeListener() {
+				    public void stateChanged(ChangeEvent e) {
+				    	//Object source = e.getSource();
+				    	//if(source.equals(spinner_1)) {
+				    		int enfantCount = (int) spinner_1_1.getValue();
+		    		        if (enfantCount < labels.size()) {
+		    		            for (int i = enfantCount; i < labels.size(); i++) {
+		    		            	panel_1.remove(labels.get(i));
+		    		                panel_1.remove(spinners.get(i));
+		    		            }
+		    		            labels.subList(enfantCount, labels.size()).clear();
+		    		            spinners.subList(enfantCount, spinners.size()).clear();
+		    		        } else {
+		    		            for (int i = labels.size() + 1; i <= enfantCount; i++) {
+		    		                JLabel label = new JLabel("enfant " + i);
+		    		                label.setBounds(33+(i-1)*60, 129, 49, 14);
+		    		                panel_1.add(label);
+		    		                labels.add(label);
+		
+		    		                JSpinner enfantSpinner = new JSpinner();
+		    		                enfantSpinner.setModel(new SpinnerNumberModel(0, 0, 12, 1));
+		    		                enfantSpinner.setBounds(33+(i-1)*60, 143, 40, 20);
+		    		                panel_1.add(enfantSpinner);
+		    		                spinners.add(enfantSpinner);
+		    		            }
+		    		        }
+		    		        panel_1.revalidate();
+		    		        panel_1.repaint();
+		    		    }
+				   // }
+				    
+				        
+				});
+				panel_1.add(spinner_1_1);
+       
+		
+		
+		JLabel lblNewLabel_5 = new JLabel("Reserver");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel_5.setBounds(179, 15, 93, 14);
+		frame.getContentPane().add(lblNewLabel_5);
+		
+		JButton btnNewButton_1 = new JButton("<");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				Accueil ah = new Accueil();
+                ah.getFrame().setTitle("Welcome");
+                ah.getFrame().setVisible(true);
+			}
+		});
+		btnNewButton_1.setBounds(10, 6, 54, 23);
+		frame.getContentPane().add(btnNewButton_1);
+		
+		
+		
+		
+		
+
+		
+		JButton btnNewButton_2 = new JButton("Annuler");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dateChooser.setDate(null);
+		        dateChooser_1.setDate(null);
+		        comboBox_1.setSelectedIndex(0);
+		        spinner_2.setValue(1);
+		        spinner_1_1.setValue(0);
+			}
+		});
+		btnNewButton_2.setBounds(92, 368, 89, 23);
+		frame.getContentPane().add(btnNewButton_2);
+		
+		
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 String arrivalDate = dateChooser_1.getDate().toString();
+			        String departureDate = dateChooser.getDate().toString();
+			        String category = comboBox_1.getSelectedItem().toString();
+			        int numAdults = (int) spinner_2.getValue();
+			        int numChildren = (int) spinner_1_1.getValue();
+			}
+		});
+		btnNewButton_3.setBounds(230, 368, 104, 23);
+		btnNewButton_3.setEnabled(false);
+		frame.getContentPane().add(btnNewButton_3);
+		
+		JPanel[] roomPanels = new JPanel[10]; // array to store the room panels
+		Chambre  temp  = new Chambre();
+//		tabbedPane.addTab("Chambre"+(numRooms), null,temp.getPanel(), null);
+//        updateTabTitles( tabbedPane);
+		JButton btnNewButton = new JButton("Ajouter une autre chambre");
+		btnNewButton.setBounds(154, 327, 219, 23);
+		btnNewButton.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        if (e.getSource() == btnNewButton) {
+		            Chambre  temp  = new Chambre();
+		            
+		            numRooms++;
+		            
+//		            cmt=numRooms;
+		            tabbedPane.addTab("Chambre"+(numRooms), null,temp.getPanel(), null);
+		            updateTabTitles( tabbedPane);
+		            
+		            
+		            temp.getBtnDelete().addActionListener(new ActionListener() {
+    	     		    @Override
+    	     		    public void actionPerformed(ActionEvent e) {
+    	     		        int index = tabbedPane.getSelectedIndex();
+    	     		        if (index != -1) {
+    	     		        	
+    	     		        	tabbedPane.remove(index);
+    	     		        	updateTabTitles( tabbedPane);
+    	     		        //	roomPanels.remove(index);
+    	     		        	//updateTabTitles(tabbedPanel) ;
+    	     		        	numRooms--;
+    	     		        }
+    	     	}
+    	     		    
+    	     		    
+    	     });
+		            
+
+		        }}
+		            
+		});
+		
+		frame.getContentPane().add(btnNewButton);
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+}

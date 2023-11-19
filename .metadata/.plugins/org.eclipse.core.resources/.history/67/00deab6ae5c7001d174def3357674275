@@ -1,0 +1,141 @@
+package MiniProjet;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.Color;
+import com.toedter.calendar.JDateChooser;
+import javax.swing.border.TitledBorder;
+import javax.swing.JComboBox;
+import javax.swing.JSpinner;
+
+public class Res {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Res window = new Res();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Res() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 0, 436, 263);
+		frame.getContentPane().add(scrollPane);
+		
+		JPanel panel = new JPanel();
+		scrollPane.setViewportView(panel);
+		panel.setLayout(null);
+		
+		JButton btnNewButton_1 = new JButton("<");
+		btnNewButton_1.setBounds(25, 0, 54, 23);
+		panel.add(btnNewButton_1);
+		
+		JLabel lblNewLabel_5 = new JLabel("Reserver");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel_5.setBounds(194, 9, 93, 14);
+		panel.add(lblNewLabel_5);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setLayout(null);
+		panel_1.setBackground(Color.LIGHT_GRAY);
+		panel_1.setBounds(64, 34, 324, 57);
+		panel.add(panel_1);
+		
+		JLabel lblNewLabel = new JLabel("La date d'arrivee       :");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setBounds(28, 11, 167, 14);
+		panel_1.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("La date de depart     :");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(28, 34, 174, 14);
+		panel_1.add(lblNewLabel_1);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(203, 30, 95, 20);
+		panel_1.add(dateChooser);
+		
+		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1.setBounds(203, 5, 95, 20);
+		panel_1.add(dateChooser_1);
+		
+		JPanel panel_1_1 = new JPanel();
+		panel_1_1.setLayout(null);
+		panel_1_1.setBorder(new TitledBorder(null, "Chambre 1", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1_1.setBackground(Color.LIGHT_GRAY);
+		panel_1_1.setBounds(64, 124, 324, 174);
+		panel.add(panel_1_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Categorie du chambre :");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_2.setBounds(10, 33, 162, 14);
+		panel_1_1.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("Nombre d'adulte          :");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_3.setBounds(10, 73, 181, 14);
+		panel_1_1.add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_4 = new JLabel("Nombre d'enfant         :");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_4.setBounds(10, 112, 162, 14);
+		panel_1_1.add(lblNewLabel_4);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(191, 31, 99, 22);
+		panel_1_1.add(comboBox);
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setBounds(191, 72, 47, 20);
+		panel_1_1.add(spinner);
+		
+		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setBounds(191, 111, 47, 20);
+		panel_1_1.add(spinner_1);
+		
+		JButton btnNewButton = new JButton("Ajouter une autre chambre");
+		btnNewButton.setBounds(169, 298, 219, 23);
+		panel.add(btnNewButton);
+		
+		JButton btnNewButton_3 = new JButton("Rechercher");
+		btnNewButton_3.setBounds(245, 332, 104, 23);
+		panel.add(btnNewButton_3);
+		
+		JButton btnNewButton_2 = new JButton("Annuler");
+		btnNewButton_2.setBounds(107, 332, 89, 23);
+		panel.add(btnNewButton_2);
+	}
+
+}

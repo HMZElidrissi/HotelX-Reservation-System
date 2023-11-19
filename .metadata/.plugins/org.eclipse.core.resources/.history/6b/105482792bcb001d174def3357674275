@@ -1,0 +1,153 @@
+package MiniProjet;
+
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.awt.Color;
+import java.text.SimpleDateFormat;
+
+public class EnregistrerReservation {
+
+	private JFrame frame;
+	public Connexion myCnx;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private SimpleDateFormat SDF;
+	private String date1;
+	private String date2;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					EnregistrerReservation window = new EnregistrerReservation();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public EnregistrerReservation() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		myCnx=new Connexion();
+		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(158, 158, 158));
+		frame.setBounds(400, 200, 450, 397);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JButton btnNewButton_1 = new JButton("Accueil");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				Accueil ah = new Accueil();
+                ah.getFrame().setTitle("Accueil");
+                ah.getFrame().setVisible(true);
+			}
+		});
+		btnNewButton_1.setBounds(10, 6, 89, 23);
+		frame.getContentPane().add(btnNewButton_1);
+		
+		
+		JLabel lblNewLabel = new JLabel("Enregistrer reservation");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel.setBounds(129, 15, 194, 28);
+		frame.getContentPane().add(lblNewLabel);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(192, 192, 192));
+		panel.setBounds(32, 74, 371, 218);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel_1 = new JLabel("Nom   :");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_1.setBounds(37, 23, 104, 14);
+		panel.add(lblNewLabel_1);
+		
+		textField = new JTextField();
+		textField.setBounds(74, 48, 234, 20);
+		panel.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("Prenom   :");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_2.setBounds(37, 79, 104, 14);
+		panel.add(lblNewLabel_2);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(74, 104, 234, 20);
+		panel.add(textField_1);
+		textField_1.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("N telephone :");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_3.setBounds(37, 135, 104, 14);
+		panel.add(lblNewLabel_3);
+		
+		textField_2 = new JTextField();
+		textField_2.setBounds(74, 162, 234, 20);
+		panel.add(textField_2);
+		textField_2.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Enregistrer");
+		btnNewButton.setBounds(166, 303, 104, 23);
+		frame.getContentPane().add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ResultSet RS;
+				String Select1="INSERT INTO `client`(Nom, Prenom, Num_tel)\r\n"
+						+ " VALUES ("+textField.getText()+"," +textField_1.getText()+"," +textField_2.getText()+");\r\n";
+				String Select2="SELECT ClientID FROM `client` WHERE Nom="+textField.getText()+" AND Prenom="+textField_1.getText()+";";
+				int clientId=0;
+				try {
+					RS = myCnx.getData(Select1);
+				} catch (SQLException ex) {
+					// TODO Auto-generated catch block
+					ex.printStackTrace();
+				}
+				try {
+					RS = myCnx.getData(Select2);
+					clientId=Integer.parseInt(RS.getString(1));
+				} catch (SQLException ex) {
+					// TODO Auto-generated catch block
+					ex.printStackTrace();
+				}
+				String Select3="INSERT INTO Reservation (ClientID, Date_arrivée, Date_depart)\r\n"
+								+ "VALUES ("+clientId+","++","++");";
+			}
+		});
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+}
